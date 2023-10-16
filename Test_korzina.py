@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import Select
 import time
 
 link = 'https://www.citilink.ru/'
-
+# дзаход на сайт, сортировка по рейтингу, добавление товара в корзину,очистка корзины
 # Xpath конечно громоздкий но мне он нравиться, более точный так сказать
 class Test_korzina(): 
     def test(self):
