@@ -4,37 +4,46 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
+from selenium.webdriver.support import expected_conditions as EC
 
-link = 'https://www.citilink.ru/'
-# дзаход на сайт, сортировка по рейтингу, добавление товара в корзину,очистка корзины
+link = 'https://www.citilink.ru/catalog/noutbuki/'
+# заход на сайт, сортировка по рейтингу, добавление товара в корзину,очистка корзины
 # Xpath конечно громоздкий но мне он нравиться, более точный так сказать
 class Test_korzina(): 
     def test(self):
         browser = webdriver.Chrome()
         browser.get(link)
-        browser.implicitly_wait(15)
-        noyt = browser.find_element(By.XPATH, "/html/body/div[2]/div/main/div[1]/div[1]/div/div[2]/div/div[2]/div/a[1]").click()       
-        poreaity = browser.find_element(By.XPATH, '/html/body/div[2]/div/main/section/div[2]/div/div/section/div[2]/div[1]/div[2]/div[2]/div/button[3]/span').click() 
-        time.sleep(3)       
-        nout = browser.find_element(By.XPATH, '/html/body/div[2]/div/main/section/div[2]/div/div/section/div[2]/div[2]/div[1]/div/div[3]/div[1]/a').click()                     
-        vkorziny = browser.find_element(By.CLASS_NAME, 'e11w80q30.e4uhfkv0.app-catalog-1lk9ql2.e4mggex0').click()       
-        namenoyt = browser.find_element(By.XPATH, '/html/body/div[2]/div/main/div[1]/div[2]/div/div[2]/h1')
-        name = namenoyt.text
-        korzinaput = browser.find_element(By.CSS_SELECTOR, 'body > div.PopupScrollContainer > div > div > div > div > div.css-10n8sd6.e73syig0 > div > div > div > div.css-ass1ds.egfuobq0 > a > button').click()        
-        namenoyt2 = browser.find_element(By.XPATH, '/html/body/div[2]/div/main/div[1]/div[2]/section/div[1]/div/div/div/div[2]/div/a/span/span')
-        name2 = namenoyt2.text
+        
+        
 
-        assert name == name2 
+        po_retingy = WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//div[2]/div[1]/div[2]/div[2]/div/button[3]")))
+        po_retingy.click()
+        
+        vsplivai_okno = browser.find_element(By.XPATH, "//button[text()='OK']").click()
 
-        clearkorzina = browser.find_element(By.XPATH, '/html/body/div[2]/div/main/div[1]/div[2]/section/div[2]/div/div[1]/div[3]/button/span/div[2]/span').click()
-        time.sleep(3)                                   
+        noytbyk_v_korziny =browser.find_element(By.XPATH, "//button//span[text()='В корзину']")
+        noytbyk_v_korziny.click()
+        time.sleep(3)
+        zpomnim_nazvanie_noytbyka = browser.find_element(By.XPATH, "//div[@class='css-hdphih e1xk8xnt0']")
+        nazvanie = zpomnim_nazvanie_noytbyka.text
+
+        perehod_v_korziny = WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//button//span[text()='Перейти в корзину']"))).click()
+
+
+        noyt_v_korzine =  WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//a//span[@class='e1ys5m360 e106ikdt0 css-175fskm e1gjr6xo0']//span")))
+        nazvanie_nuyta_v_karzine = noyt_v_korzine.text
+        assert nazvanie == nazvanie_nuyta_v_karzine
+        
+        ochistit_korziny =  WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH,"//span[text()='Очистить корзину']"))).click()
+        
+        
+                                          
         browser.quit
         
 
 
-       
-        
-                                                                                                                                     
+
+                                                                                      
          
 
 
