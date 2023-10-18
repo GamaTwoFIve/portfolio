@@ -6,12 +6,19 @@ from selenium.webdriver.support.ui import Select
 import time
 from selenium.webdriver.support import expected_conditions as EC
 
+
+@pytest.fixture(scope="class")
+def browser():
+    browser = webdriver.Chrome()
+    yield browser
+    browser.quit()
+
+
+
 link = 'https://www.citilink.ru/catalog/noutbuki/'
-# заход на сайт, сортировка по рейтингу, добавление товара в корзину,очистка корзины
-# Xpath конечно громоздкий но мне он нравиться, более точный так сказать
+
 class Test_korzina(): 
-    def test(self):
-        browser = webdriver.Chrome()
+    def test(self,browser):       
         browser.get(link)
         
         
@@ -21,7 +28,7 @@ class Test_korzina():
         
         vsplivai_okno = browser.find_element(By.XPATH, "//button[text()='OK']").click()
 
-        noytbyk_v_korziny =browser.find_element(By.XPATH, "//button//span[text()='В корзину']")
+        noytbyk_v_korziny = WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//button//span[text()='В корзину']")))
         noytbyk_v_korziny.click()
         time.sleep(3)
         zpomnim_nazvanie_noytbyka = browser.find_element(By.XPATH, "//div[@class='css-hdphih e1xk8xnt0']")
@@ -38,8 +45,7 @@ class Test_korzina():
         
         
                                           
-        browser.quit
-        
+
 
 
 
