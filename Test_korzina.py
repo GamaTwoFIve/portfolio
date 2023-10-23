@@ -7,11 +7,7 @@ import time
 from selenium.webdriver.support import expected_conditions as EC
 
 
-@pytest.fixture(scope="class")
-def browser():
-    browser = webdriver.Chrome()
-    yield browser
-    browser.quit()
+
 
 
 
