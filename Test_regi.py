@@ -9,9 +9,9 @@ link = "http://suninjuly.github.io/simple_form_find_task.html"
 # заполнить обязательные поля регистрации и нажать кнопку подтвердить за 3 секунды 
 class Test_registr():
 
-    def test(self):
+    def test(self, browser):
 
-        browser = webdriver.Chrome()
+        
         browser.get(link)
         
 
@@ -30,5 +30,5 @@ class Test_registr():
         
         button = browser.find_element(By.ID, 'submit_button').click()
 
-        browser.quit
+        
 
